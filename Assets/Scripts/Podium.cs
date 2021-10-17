@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Podium : MonoBehaviour
 {
     [SerializeField] private Transform spawn;
+    [SerializeField] public Text CardLevel;
     private Card spawnedCard;
     public bool IsEmpty()
     {
