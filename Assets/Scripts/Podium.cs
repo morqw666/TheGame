@@ -30,7 +30,6 @@ public class Podium : MonoBehaviour
     {
         if (!IsEmpty())
         {
-            //Destroy(spawnedCard.gameObject);
             spawnedCard = null;
         }
     }

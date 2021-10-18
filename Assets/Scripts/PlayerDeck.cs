@@ -7,13 +7,7 @@ using UnityEngine.UI;
 public class PlayerDeck : MonoBehaviour
 {
     [SerializeField] private List<Podium> _podiums;
-    [SerializeField] public Text Health;
-    private int health = 200;
     private List<Card> PlayerCardDeck = new List<Card>();
-    private void Start()
-    {
-        Health.text = health.ToString();
-    }
     public bool TryTakeCard(Card card)
     {
         for (int i = 0; i < _podiums.Count; i++)
@@ -218,5 +212,35 @@ public class PlayerDeck : MonoBehaviour
             }
         }
         return false;
+    }
+    public int SumDamage()
+    {
+        int sumDamage = 0;
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            try
+            {
+                int damage = 0;
+                if (_podiums[i].GetCard().level == 1)
+                {
+                    damage = 1;
+                } else if (_podiums[i].GetCard().level == 2)
+                {
+                    damage = 3;
+                } else if (_podiums[i].GetCard().level == 3)
+                {
+                    damage = 8;
+                } else if (_podiums[i].GetCard().level == 4)
+                {
+                    damage = 20;
+                }
+                sumDamage += damage;
+            }
+            catch (NullReferenceException)
+            {
+                continue;
+            }
+        }
+        return sumDamage;
     }
 }
