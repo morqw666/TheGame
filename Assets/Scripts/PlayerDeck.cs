@@ -10,7 +10,6 @@ public class PlayerDeck : MonoBehaviour
     [SerializeField] public Text Health;
     private int health = 200;
     private List<Card> PlayerCardDeck = new List<Card>();
-    private Renderer _renderer;
     private void Start()
     {
         Health.text = health.ToString();
@@ -25,6 +24,14 @@ public class PlayerDeck : MonoBehaviour
                 if (IsPodiumsContainLevelThree() && IsPodiumsContainLevelTwo())
                 {
                     var cardLvlTwo = CardLevelTwo();
+                    if (AnotherCardLevelTwo(cardLvlTwo) != null)
+                    {
+                        var anotherCardLvlTwo = AnotherCardLevelTwo(cardLvlTwo);
+                        if (card.GetMaterial() == anotherCardLvlTwo.GetMaterial())
+                        {
+                            cardLvlTwo = anotherCardLvlTwo;
+                        }
+                    }
                     var cardLvlThree = CardLevelThree();
                     if (cardLvlTwo.GetMaterial() == cardOnPodium.GetMaterial() && cardLvlTwo.GetMaterial() == card.GetMaterial() && cardLvlTwo.GetMaterial() == cardLvlThree.GetMaterial() && cardOnPodium.level < 2)
                     {
@@ -49,6 +56,14 @@ public class PlayerDeck : MonoBehaviour
                 if (IsPodiumsContainLevelTwo())
                 {
                     var cardLvlTwo = CardLevelTwo();
+                    if (AnotherCardLevelTwo(cardLvlTwo) != null)
+                    {
+                        var anotherCardLvlTwo = AnotherCardLevelTwo(cardLvlTwo);
+                        if (card.GetMaterial() == anotherCardLvlTwo.GetMaterial())
+                        {
+                            cardLvlTwo = anotherCardLvlTwo;
+                        }
+                    }
                     if (cardLvlTwo.GetMaterial() == cardOnPodium.GetMaterial() && cardLvlTwo.GetMaterial() == card.GetMaterial() && cardOnPodium.level < 2)
                     {
                         card.level = 3;
@@ -134,15 +149,40 @@ public class PlayerDeck : MonoBehaviour
         }
         return null;
     }
-    private Card CardLevelThree()
+    private Card AnotherCardLevelTwo(Card anotherCardLvlTwo)
     {
         for (int i = 0; i < _podiums.Count; i++)
         {
             var card = _podiums[i].GetCard();
-            if (card.level == 3)
+            try
             {
-                return card;
+                if (card.level == 2 && card.GetMaterial() != anotherCardLvlTwo.GetMaterial())
+                {
+                    return card;
+                }
+            } catch (NullReferenceException)
+            {
+                continue;
             }
+        }
+        return null;
+    }
+    private Card CardLevelThree()
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            try
+            {
+                var card = _podiums[i].GetCard();
+                if (card.level == 3)
+                {
+                    return card;
+                }
+            } catch (NullReferenceException)
+            {
+                continue;
+            }
+            
         }
         return null;
     }
