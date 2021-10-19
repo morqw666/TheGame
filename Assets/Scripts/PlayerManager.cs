@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         current = player1;
+        current.PodiumsUp();
         HealthPlayer1.text = healthPlayer1.ToString();
         HealthPlayer2.text = healthPlayer2.ToString();
     }
@@ -25,17 +26,25 @@ public class PlayerManager : MonoBehaviour
         HealthPlayer1.text = healthPlayer1.ToString();
         HealthPlayer2.text = healthPlayer2.ToString();
     }
-    public bool TryTakeCard(Card card)
+    public void ChangePlayer()
     {
-        bool Result = current.TryTakeCard(card);
         if (current == player1)
         {
+            player1.PodiumsDown();
+            player2.PodiumsUp();
             current = player2;
         } else if (current == player2)
         {
+            player2.PodiumsDown();
+            player1.PodiumsUp();
             EndTurn();
             current = player1;
         }
+    }
+    public bool TryTakeCard(Card card)
+    {
+        bool Result = current.TryTakeCard(card);
+        ChangePlayer();
         return Result;
     }
 }

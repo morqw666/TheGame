@@ -9,7 +9,7 @@ public class Deck : MonoBehaviour
     [SerializeField] private List<Podium> _podiums;
     [SerializeField] private Card _prefab;
     [SerializeField] private List<ColoredMaterial> _materials;
-    [SerializeField] private int _CardDeckCount = 36;
+    [SerializeField] private int _CardDeckCount = 60;
     private List<Card> CardDeck = new List<Card>();
     [SerializeField] private Text CardsCountLabel;
     [SerializeField] private PlayerManager playerManager;
@@ -66,4 +66,8 @@ public class Deck : MonoBehaviour
         }
         FillEmptyPodiums();
     } 
+    public void ButtoneSkipTurn()
+    {
+        playerManager.ChangePlayer();
+    }
 }

@@ -49,6 +49,45 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
+    public void PodiumsUp()
+    {
+        for (int i = 0; i < _podiums.Count; i ++)
+        {
+            var podium = _podiums[i];
+            if (!podium.IsEmpty())
+            {
+                var card = podium.GetCard();
+                podium.PodiumUp(podium, card);
+            }
+            else
+            {
+                podium.PodiumUp(podium, null);
+            }
+        }
+    }
+    public void PodiumsDown()
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            var podium = _podiums[i];
+            if (!podium.IsEmpty())
+            {
+                var card = podium.GetCard();
+                podium.PodiumDown(podium, card);
+            }
+            else
+            {
+                podium.PodiumDown(podium, null);
+            }
+        }
+    }
+    public void DiscardCard(Podium podium)
+    {
+        if (!podium.IsEmpty())
+        {
+            podium.Destroy();
+        }
+    }
     public int SumDamage()
     {
         int sumDamage = 0;
