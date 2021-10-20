@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerDeck player1, player2;
     private PlayerDeck current;
+    public PlayerDeck winner;
     [SerializeField] public Text HealthPlayer1;
     [SerializeField] public Text HealthPlayer2;
     private int healthPlayer1 = 200;
@@ -25,6 +27,16 @@ public class PlayerManager : MonoBehaviour
         healthPlayer2 -= player1.SumDamage();
         HealthPlayer1.text = healthPlayer1.ToString();
         HealthPlayer2.text = healthPlayer2.ToString();
+        if (healthPlayer1 <= 0 || healthPlayer2 <= 0)
+        {
+            if (healthPlayer1 > healthPlayer2)
+                winner = player1;
+            else if (healthPlayer2 > healthPlayer1)
+                winner = player2;
+            else
+                winner = null;
+            SceneManager.LoadScene(1);
+        }
     }
     public void ChangePlayer()
     {

@@ -7,6 +7,11 @@ using UnityEngine.UI;
 public class PlayerDeck : MonoBehaviour
 {
     [SerializeField] private List<Podium> _podiums;
+    [SerializeField] private Transform podiumsPosUp;
+    [SerializeField] private Transform podiumsPosDown;
+    private bool tokenUp = false;
+    private bool tokenDown = false;
+    private float _speed = 0.8f;
     private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
     public bool TryTakeCard(Card card)
     {
@@ -49,37 +54,56 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
-    public void PodiumsUp()
+    private void Update()
     {
-        for (int i = 0; i < _podiums.Count; i ++)
+        if (tokenUp == true)
         {
-            var podium = _podiums[i];
-            if (!podium.IsEmpty())
+            for (int i = 0; i < _podiums.Count; i++)
             {
-                var card = podium.GetCard();
-                podium.PodiumUp(podium, card);
+                var podium = _podiums[i];
+                var pos = podium.transform.position;
+                podiumsPosUp.transform.position = new Vector3(pos.x, podiumsPosUp.position.y, pos.z);
+                podium.transform.position = Vector3.MoveTowards(pos, podiumsPosUp.position, _speed * Time.deltaTime);
+                if (!podium.IsEmpty())
+                {
+                    var card = podium.GetCard();
+                    var cardpos = card.transform.position;
+                    card.transform.position = cardpos + new Vector3(0, _speed * Time.deltaTime, 0);
+                }
+                if (pos == podiumsPosUp.position)
+                {
+                    tokenUp = false;
+                }
             }
-            else
+        }
+        if (tokenDown == true)
+        {
+            for (int i = 0; i < _podiums.Count; i++)
             {
-                podium.PodiumUp(podium, null);
+                var podium = _podiums[i];
+                var pos = podium.transform.position;
+                podiumsPosDown.transform.position = new Vector3(pos.x, podiumsPosDown.position.y, pos.z);
+                podium.transform.position = Vector3.MoveTowards(pos, podiumsPosDown.position, _speed * Time.deltaTime);
+                if (!podium.IsEmpty())
+                {
+                    var card = podium.GetCard();
+                    var cardpos = card.transform.position;
+                    card.transform.position = cardpos - new Vector3(0, _speed * Time.deltaTime, 0);
+                }
+                if (pos == podiumsPosDown.position)
+                {
+                    tokenDown = false;
+                }
             }
         }
     }
+    public void PodiumsUp()
+    {
+        tokenUp = true;
+    }
     public void PodiumsDown()
     {
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            var podium = _podiums[i];
-            if (!podium.IsEmpty())
-            {
-                var card = podium.GetCard();
-                podium.PodiumDown(podium, card);
-            }
-            else
-            {
-                podium.PodiumDown(podium, null);
-            }
-        }
+        tokenDown = true;
     }
     public void DiscardCard(Podium podium)
     {
