@@ -11,7 +11,6 @@ public class Podium : MonoBehaviour
     {
         return spawnedCard == null;
     }
-
     public void SetCard(Card card)
     {
         card.transform.position = spawn.position;

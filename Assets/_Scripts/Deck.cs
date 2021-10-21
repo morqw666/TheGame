@@ -51,7 +51,17 @@ public class Deck : MonoBehaviour
             }
         }
     }
-    public void TakeCard(Card card)
+    public void InvokeBotTakeCard()
+    {
+        Invoke("BotTakeCard", 1.5f);
+    }
+    public void BotTakeCard()
+    {
+        var podium = _podiums[UnityEngine.Random.Range(0, _podiums.Count)];
+        var card = podium.GetCard();
+        TakeCard(card);
+    }
+    public void TakeCard(Card card) 
     {
         for (int i = 0; i < _podiums.Count; i++)
         {
@@ -60,8 +70,13 @@ public class Deck : MonoBehaviour
                 if (playerManager.TryTakeCard(card))
                 {
                     _podiums[i].Clear();
+                    playerManager.ChangePlayer();
                     break;
-                }           
+                } 
+                else
+                {
+                    return;
+                }
             }
         }
         FillEmptyPodiums();

@@ -8,12 +8,22 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerDeck player1, player2;
+    [SerializeField] private Deck deck;
     private PlayerDeck current;
     public PlayerDeck winner;
     [SerializeField] public Text HealthPlayer1;
     [SerializeField] public Text HealthPlayer2;
     private int healthPlayer1 = 200;
     private int healthPlayer2 = 200;
+    private int _gameMode = 2;
+    public int GameMode
+    {
+        get => _gameMode;
+        set
+        {
+            _gameMode = value;
+        }
+    }
     private void Start()
     {
         current = player1;
@@ -35,7 +45,7 @@ public class PlayerManager : MonoBehaviour
                 winner = player2;
             else
                 winner = null;
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
     public void ChangePlayer()
@@ -45,6 +55,12 @@ public class PlayerManager : MonoBehaviour
             player1.PodiumsDown();
             player2.PodiumsUp();
             current = player2;
+            if (GameMode == 2)
+            {
+                deck.InvokeBotTakeCard();
+                //deck.Invoke("BotTakeCard", 3.0f);
+                //deck.BotTakeCard();
+            }
         } else if (current == player2)
         {
             player2.PodiumsDown();
@@ -56,7 +72,6 @@ public class PlayerManager : MonoBehaviour
     public bool TryTakeCard(Card card)
     {
         bool Result = current.TryTakeCard(card);
-        ChangePlayer();
         return Result;
     }
 }

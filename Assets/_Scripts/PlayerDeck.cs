@@ -22,6 +22,41 @@ public class PlayerDeck : MonoBehaviour
                 _podiums[i].SetCard(card);
                 TryMergeCards();
                 return true;
+            } 
+            else if (IsAllPodiumsFull() == true)
+            {
+                if (TryMergeCard(card))
+                {
+                    TryMergeCards();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private bool IsAllPodiumsFull()
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            if (_podiums[i].IsEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private bool TryMergeCard(Card card)
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            var podium = _podiums[i];
+            var card1 = podium.GetCard();
+            if (card1.GetMaterial() == card.GetMaterial() && card1.Level == card.Level)
+            {
+                card.Level++;
+                _podiums[i].Destroy();
+                _podiums[i].SetCard(card);
+                return true;
             }
         }
         return false;
