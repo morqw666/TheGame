@@ -15,15 +15,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] public Text HealthPlayer2;
     private int healthPlayer1 = 200;
     private int healthPlayer2 = 200;
-    private int _gameMode = 2;
-    public int GameMode
-    {
-        get => _gameMode;
-        set
-        {
-            _gameMode = value;
-        }
-    }
+    public static int GameMode = 1;
+
     private void Start()
     {
         current = player1;
@@ -40,9 +33,9 @@ public class PlayerManager : MonoBehaviour
         if (healthPlayer1 <= 0 || healthPlayer2 <= 0)
         {
             if (healthPlayer1 > healthPlayer2)
-                winner = player1;
+                Lose.winner = "player1";
             else if (healthPlayer2 > healthPlayer1)
-                winner = player2;
+                Lose.winner = "player2";
             else
                 winner = null;
             SceneManager.LoadScene(2);
@@ -58,8 +51,6 @@ public class PlayerManager : MonoBehaviour
             if (GameMode == 2)
             {
                 deck.InvokeBotTakeCard();
-                //deck.Invoke("BotTakeCard", 3.0f);
-                //deck.BotTakeCard();
             }
         } else if (current == player2)
         {

@@ -25,9 +25,22 @@ public class Card : MonoBehaviour
     {
         return _renderer.sharedMaterial;
     }
-    private void OnMouseDown()
+    private void OnMouseDrag()
+    {
+        var selectionManager = FindObjectOfType<SelectionManager>();
+        selectionManager.CardThrowFromDeck(this);
+    }
+    private void OnMouseUp()
     {
         var deck = FindObjectOfType<Deck>();
-        deck.TakeCard(this);
+        if (deck.TakeCard(this) == false)
+        {
+            deck.ReturnCard(this);
+        }
     }
+    //private void OnMouseDown()
+    //{
+    //    var deck = FindObjectOfType<Deck>();
+    //    deck.TakeCard(this);
+    //}
 }

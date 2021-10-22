@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,7 +61,17 @@ public class Deck : MonoBehaviour
         var card = podium.GetCard();
         TakeCard(card);
     }
-    public void TakeCard(Card card) 
+    public void ReturnCard(Card card)
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            if (_podiums[i].IsEmpty())
+            {
+                _podiums[i].SetCard(card);
+            }
+        }
+    }
+    public bool TakeCard(Card card)
     {
         for (int i = 0; i < _podiums.Count; i++)
         {
@@ -72,15 +82,37 @@ public class Deck : MonoBehaviour
                     _podiums[i].Clear();
                     playerManager.ChangePlayer();
                     break;
-                } 
+                }
                 else
                 {
-                    return;
+                    _podiums[i].Clear();
+                    return false;
                 }
             }
         }
         FillEmptyPodiums();
-    } 
+        return true;
+    }
+    //public void TakeCard(Card card) 
+    //{
+    //    for (int i = 0; i < _podiums.Count; i++)
+    //    {
+    //        if (_podiums[i].Contains(card))
+    //        {
+    //            if (playerManager.TryTakeCard(card))
+    //            {
+    //                _podiums[i].Clear();
+    //                playerManager.ChangePlayer();
+    //                break;
+    //            } 
+    //            else
+    //            {
+    //                return;
+    //            }
+    //        }
+    //    }
+    //    FillEmptyPodiums();
+    //} 
     public void ButtoneSkipTurn()
     {
         playerManager.ChangePlayer();
