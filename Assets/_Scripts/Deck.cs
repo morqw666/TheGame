@@ -93,26 +93,6 @@ public class Deck : MonoBehaviour
         FillEmptyPodiums();
         return true;
     }
-    //public void TakeCard(Card card) 
-    //{
-    //    for (int i = 0; i < _podiums.Count; i++)
-    //    {
-    //        if (_podiums[i].Contains(card))
-    //        {
-    //            if (playerManager.TryTakeCard(card))
-    //            {
-    //                _podiums[i].Clear();
-    //                playerManager.ChangePlayer();
-    //                break;
-    //            } 
-    //            else
-    //            {
-    //                return;
-    //            }
-    //        }
-    //    }
-    //    FillEmptyPodiums();
-    //} 
     public void ButtoneSkipTurn()
     {
         playerManager.ChangePlayer();

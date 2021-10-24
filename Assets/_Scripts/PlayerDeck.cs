@@ -14,6 +14,19 @@ public class PlayerDeck : MonoBehaviour
     private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
     public bool TryTakeCard(Card card)
     {
+        var selectionManager = FindObjectOfType<SelectionManager>();
+        var podium = selectionManager.GetPodium();
+        if (podium != null)
+        {
+            if (podium.IsEmpty())
+            {
+                podium.SetCard(card);
+                TryMergeCards();
+                return true;
+            }
+            else
+                return false;
+        }
         for (int i = 0; i < _podiums.Count; i++)
         {
             if (_podiums[i].IsEmpty())

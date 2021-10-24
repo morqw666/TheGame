@@ -27,11 +27,15 @@ public class Card : MonoBehaviour
     }
     private void OnMouseDrag()
     {
+        var colider = this.GetComponent<Collider>();
+        colider.enabled = false;
         var selectionManager = FindObjectOfType<SelectionManager>();
         selectionManager.CardThrowFromDeck(this);
     }
     private void OnMouseUp()
     {
+        var colider = this.GetComponent<Collider>();
+        colider.enabled = true;
         var deck = FindObjectOfType<Deck>();
         if (deck.TakeCard(this) == false)
         {
