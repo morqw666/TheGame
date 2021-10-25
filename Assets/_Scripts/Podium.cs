@@ -13,9 +13,12 @@ public class Podium : MonoBehaviour
     }
     public void SetCard(Card card)
     {
-        card.transform.position = spawn.position;
         spawnedCard = card;
-        card.transform.SetParent(spawn);
+        if (card != null)
+        {
+            card.transform.position = spawn.position;
+            card.transform.SetParent(spawn);
+        }
     }
     public Card GetCard()
     {

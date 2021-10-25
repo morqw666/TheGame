@@ -205,6 +205,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9219091049955950737, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
       propertyPath: m_Name
       value: podium 4
@@ -253,7 +257,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
 --- !u!1 &349582869
 GameObject:
@@ -962,6 +967,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9219091049955950737, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
       propertyPath: m_Name
       value: podium 3
@@ -1022,7 +1031,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
 --- !u!1 &814606174
 GameObject:
@@ -1950,6 +1960,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9219091049955950737, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
       propertyPath: m_Name
       value: podium 2
@@ -1998,7 +2012,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
 --- !u!1001 &1427301047
 PrefabInstance:
@@ -2068,6 +2083,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9219091049955950737, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
       propertyPath: m_Name
       value: podium 1
@@ -2116,7 +2135,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
 --- !u!1 &1457240878
 GameObject:
@@ -2858,6 +2878,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9219091049955950737, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
       propertyPath: m_Name
       value: podium
@@ -2906,5 +2930,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3002906559895199776, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f6e86b58e0cf68545a71de00d97635ed, type: 3}

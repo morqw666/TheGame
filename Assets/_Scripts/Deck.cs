@@ -29,8 +29,7 @@ public class Deck : MonoBehaviour
                 card.SetMaterial(_materials[k]);
                 card.gameObject.SetActive(false);
                 CardDeck.Add(card);
-            }
-            
+            }  
         }
     }
     private void FillEmptyPodiums()
@@ -71,24 +70,23 @@ public class Deck : MonoBehaviour
             }
         }
     }
+    public bool IsPodiumFromDeck(Podium podium)
+    {
+        if (_podiums.Contains(podium)) 
+        {
+            return true;
+        }
+        return false;
+    }
     public bool TakeCard(Card card)
     {
-        for (int i = 0; i < _podiums.Count; i++)
+        if (playerManager.TryTakeCard(card))
         {
-            if (_podiums[i].Contains(card))
-            {
-                if (playerManager.TryTakeCard(card))
-                {
-                    _podiums[i].Clear();
-                    playerManager.ChangePlayer();
-                    break;
-                }
-                else
-                {
-                    _podiums[i].Clear();
-                    return false;
-                }
-            }
+            playerManager.ChangePlayer();
+        }
+        else
+        {
+            return false;
         }
         FillEmptyPodiums();
         return true;

@@ -4,34 +4,78 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 {
-    private bool _cardThrowFromDeck = false;
     private Card _card;
     private Podium _podium;
+    private bool isFromDeck;
+    private Podium _startPodium;
     public Podium GetPodium()
     {
         return _podium;
     }
-    public void CardThrowFromDeck(Card card)
-    {
-        _card = card;
-        _cardThrowFromDeck = true;
-    }
     void Update()
     {
-        if (_cardThrowFromDeck == true)
+        if (Input.GetMouseButton(0))
         {
-            var card = _card;
             Vector3 mouse = Input.mousePosition;
             Ray castPoint = Camera.main.ScreenPointToRay(mouse);
             RaycastHit hit;
             if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
             {
-                var position = hit.point;
-                card.transform.position = new Vector3(position.x, 0.75f, position.z);
-                var selection = hit.transform;
-                _podium = selection.GetComponent<Podium>();
+                if (hit.transform.TryGetComponent(out _podium))
+                {
+                    if (_card == null)
+                    {
+                        _card = _podium.GetCard();
+                        _startPodium = _podium;
+                        var deck = FindObjectOfType<Deck>();
+                        isFromDeck = deck.IsPodiumFromDeck(_podium);
+                        _podium.Clear();
+                    }    
+                }
+                if (_card != null)
+                {
+                    var position = hit.point;
+                    _card.transform.position = new Vector3(position.x, 0.75f, position.z);
+                }
             }
         }
-        _cardThrowFromDeck = false;
+        if (Input.GetMouseButtonUp(0))
+        {
+            var deck = FindObjectOfType<Deck>();
+            if (_podium != null)
+            {
+                if (isFromDeck)
+                {
+                    var lastFromDeck = deck.IsPodiumFromDeck(_podium);
+                    if (_podium.IsEmpty())
+                    {
+                        if(!lastFromDeck)
+                            deck.TakeCard(_card);
+                        else
+                            deck.ReturnCard(_card);
+                    }
+                    else
+                    {
+                        if(!deck.TakeCard(_card))
+                        {
+                            deck.ReturnCard(_card);
+                        }
+                    }
+                }    
+                else
+                {
+                    _startPodium.SetCard(_podium.GetCard());
+                    _podium.SetCard(_card);
+                }      
+            }
+            else
+            {
+                if(_startPodium != null)
+                    _startPodium.SetCard(_card);
+            }
+            _card = null;
+            _podium = null;
+            _startPodium = null;
+        }
     }
 }

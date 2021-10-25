@@ -16,34 +16,37 @@ public class PlayerDeck : MonoBehaviour
     {
         var selectionManager = FindObjectOfType<SelectionManager>();
         var podium = selectionManager.GetPodium();
-        if (podium != null)
+        if (podium != null && podium.IsEmpty())
         {
-            if (podium.IsEmpty())
+            podium.SetCard(card);
+            TryMergeCards();
+            return true;
+        } 
+        if (IsAllPodiumsFull())
+        {
+            if (TryMergeCard(card))
             {
-                podium.SetCard(card);
                 TryMergeCards();
                 return true;
             }
-            else
-                return false;
         }
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            if (_podiums[i].IsEmpty())
-            {
-                _podiums[i].SetCard(card);
-                TryMergeCards();
-                return true;
-            } 
-            else if (IsAllPodiumsFull() == true)
-            {
-                if (TryMergeCard(card))
-                {
-                    TryMergeCards();
-                    return true;
-                }
-            }
-        }
+        //for (int i = 0; i < _podiums.Count; i++)
+        //{
+        //    if (_podiums[i].IsEmpty())
+        //    {
+        //        _podiums[i].SetCard(card);
+        //        TryMergeCards();
+        //        return true;
+        //    } 
+        //    else if (IsAllPodiumsFull())
+        //    {
+        //        if (TryMergeCard(card))
+        //        {
+        //            TryMergeCards();
+        //            return true;
+        //        }
+        //    }
+        //}
         return false;
     }
     private bool IsAllPodiumsFull()
@@ -101,6 +104,18 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
+    public bool SetCardOnPodium(Card card)
+    {
+        var selectionManager = FindObjectOfType<SelectionManager>();
+        var podium = selectionManager.GetPodium();
+        if (podium != null && podium.IsEmpty())
+        {
+            podium.SetCard(card);
+            TryMergeCards();
+            return true;
+        }
+        return false;
+    }
     private void Update()
     {
         MovePodiums();
@@ -116,14 +131,24 @@ public class PlayerDeck : MonoBehaviour
             podium.transform.position = Vector3.MoveTowards(pos, position, _speed * Time.deltaTime);
         }
     }
-
     public void PodiumsUp()
     {
         _targetHeight = podiumsPosUp.position.y;
+        CollidersEnabled(true);
     }
     public void PodiumsDown()
     {
         _targetHeight = podiumsPosDown.position.y;
+        CollidersEnabled(false);
+    }
+    private void CollidersEnabled(bool option)
+    {
+        for (int i = 0; i < _podiums.Count; i++)
+        {
+            var podium = _podiums[i];
+            var colider = podium.GetComponent<Collider>();
+            colider.enabled = option;
+        }
     }
     public void DiscardCard(Podium podium)
     {

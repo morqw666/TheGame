@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
 {
     [SerializeField] private Renderer _renderer;
     [SerializeField] private Text levelLabel;
+    private Podium _podium;
     private int _level = 1;
     public int Level
     {
@@ -25,26 +26,4 @@ public class Card : MonoBehaviour
     {
         return _renderer.sharedMaterial;
     }
-    private void OnMouseDrag()
-    {
-        var colider = this.GetComponent<Collider>();
-        colider.enabled = false;
-        var selectionManager = FindObjectOfType<SelectionManager>();
-        selectionManager.CardThrowFromDeck(this);
-    }
-    private void OnMouseUp()
-    {
-        var colider = this.GetComponent<Collider>();
-        colider.enabled = true;
-        var deck = FindObjectOfType<Deck>();
-        if (deck.TakeCard(this) == false)
-        {
-            deck.ReturnCard(this);
-        }
-    }
-    //private void OnMouseDown()
-    //{
-    //    var deck = FindObjectOfType<Deck>();
-    //    deck.TakeCard(this);
-    //}
 }
