@@ -50,7 +50,12 @@ public class SelectionManager : MonoBehaviour
                     if (_podium.IsEmpty())
                     {
                         if(!lastFromDeck)
+                        {
                             deck.TakeCard(_card);
+                            _card.SetHero();
+                            var hero = FindObjectOfType<Hero>();
+                            hero.FireBullet();
+                        } 
                         else
                             deck.ReturnCard(_card);
                     }
@@ -59,13 +64,24 @@ public class SelectionManager : MonoBehaviour
                         if(!deck.TakeCard(_card))
                         {
                             deck.ReturnCard(_card);
+                            return;
                         }
+                        var hero = FindObjectOfType<Hero>();
+                        hero.FireBullet();
                     }
                 }    
                 else
                 {
-                    _startPodium.SetCard(_podium.GetCard());
-                    _podium.SetCard(_card);
+                    if (!deck.IsPodiumFromDeck(_podium))
+                    {
+                        _startPodium.SetCard(_podium.GetCard());
+                        _podium.SetCard(_card);
+                    }
+                    else
+                    {
+                        if (_startPodium != null)
+                            _startPodium.SetCard(_card);
+                    }
                 }      
             }
             else

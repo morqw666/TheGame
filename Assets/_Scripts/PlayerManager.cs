@@ -20,7 +20,8 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         current = player1;
-        current.PodiumsUp();
+        player1.PodiumsUp();
+        player2.PodiumsDown();
         HealthPlayer1.text = healthPlayer1.ToString();
         HealthPlayer2.text = healthPlayer2.ToString();
     }
@@ -64,5 +65,13 @@ public class PlayerManager : MonoBehaviour
     {
         bool Result = current.TryTakeCard(card);
         return Result;
+    }
+    public bool CurrentPlayer()
+    {
+        if (current == player1)
+        {
+            return true;
+        }
+        return false;
     }
 }
