@@ -50,6 +50,7 @@ MonoBehaviour:
   spawnBullet: {fileID: 1901974503216880755}
   _prefab: {fileID: 8275956064665060119, guid: 08a5a3a9f05ca534ebc7116f15aac79b, type: 3}
   _renderer: {fileID: -2456097038953777998}
+  _damage: 3
 --- !u!23 &-2456097038953777998
 MeshRenderer:
   m_ObjectHideFlags: 0

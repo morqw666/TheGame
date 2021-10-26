@@ -4,50 +4,45 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private int _speed; 
-    private Transform _shootingPosition;
-    private readonly List<int> DamageAmount = new List<int>() { 1, 3, 8, 20 };
+    [SerializeField] private int _speed;
     private int _damage;
-    public int Damage
+
+    //private Transform _shootingPosition;
+    //private readonly List<int> DamageAmount = new List<int>() { 1, 3, 8, 20 };
+    //public int Damage
+    //{
+    //    get => _damage;
+    //    set
+    //    {
+    //        Debug.LogError("SET: " + value);
+    //        _damage = value;
+    //    }
+    //}
+    //public Transform ShootingPosition
+    //{
+    //    get => _shootingPosition;
+    //    set
+    //    {
+    //        _shootingPosition = value;
+    //    }
+    //}
+
+    private void Update()
     {
-        get => _damage;
-        set
-        {
-            _damage = value;
-        }
+        transform.position += transform.forward * _speed * Time.deltaTime;
     }
-    public Transform ShootingPosition
-    {
-        get => _shootingPosition;
-        set
-        {
-            _shootingPosition = value;
-        }
-    }
-    void OnTriggerEnter(Collider collider)
+
+    private void OnTriggerEnter(Collider collider)
     {
         Destroy(this.gameObject);
         var playerManager = FindObjectOfType<PlayerManager>();
-        int damage = DamageAmount[_damage];
-        playerManager.TakeDamage(damage);
+        //int damage = DamageAmount[_damage];
+        //Debug.LogError(damage);
+        playerManager.TakeDamage(_damage);
     }
-    private void FireBullet()
-    {
-        var bullet = this.transform.position;
-        this.transform.position = Vector3.MoveTowards(bullet, _shootingPosition.transform.position, _speed * Time.deltaTime);
-        this.transform.rotation = Quaternion.LookRotation(_shootingPosition.transform.position);
 
-        //var bullet = this.transform.position;
-        //Vector3 dir = (_shootingPosition.transform.position - this.transform.position).normalized;
-        //this.transform.position = Vector3.MoveTowards(bullet, bullet + dir*10, _speed * Time.deltaTime);
-
-        //if (bullet == _shootingPosition.transform.position)
-        //{
-        //    Destroy(this.gameObject);
-        //}
-    }
-    private void Update()
+    public void SetDamage(int damage)
     {
-        FireBullet();
+        _damage = damage;
     }
 }

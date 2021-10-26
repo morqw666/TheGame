@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerDeck winner;
     [SerializeField] public Text HealthPlayer1;
     [SerializeField] public Text HealthPlayer2;
+    //переезжает в Castle см. PlayerDeck
     private int healthPlayer1 = 200;
     private int healthPlayer2 = 200;
     public static int GameMode = 1;
@@ -67,6 +68,7 @@ public class PlayerManager : MonoBehaviour
     //}
     public void ChangePlayer()
     {
+        current.FireBullets();
         if (current == player1)
         {
             player1.PodiumsDown();
@@ -83,6 +85,8 @@ public class PlayerManager : MonoBehaviour
             //EndTurn();
             current = player1;
         }
+
+
     }
     public bool TryTakeCard(Card card)
     {

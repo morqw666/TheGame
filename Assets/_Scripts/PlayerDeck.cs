@@ -3,29 +3,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PlayerDeck : MonoBehaviour
 {
     [SerializeField] private List<Podium> _podiums;
+    //не Transform а (создать класс Castle (тут здоровье базы должно быть))
+    [SerializeField] private Transform shootingPosition;
+
+    //в другой скрипт PodiumMover (Методы MoveUp и MoveDown)
     [SerializeField] private Transform podiumsPosUp;
     [SerializeField] private Transform podiumsPosDown;
-    [SerializeField] private Transform shootingPosition;
     private float _targetHeight;
     private float _speed = 0.8f;
+    /// ////////////////
     //private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
-    private void ShootingPosition()
+    //private void ShootingPosition()
+    //{
+    //    var selectionManager = FindObjectOfType<SelectionManager>();
+    //    selectionManager.ShootingPosition = shootingPosition;
+    //}
+
+    public void FireBullets()
     {
-        var selectionManager = FindObjectOfType<SelectionManager>();
-        selectionManager.ShootingPosition = shootingPosition;
+        var heroes = _podiums
+            .Where(item => item.GetCard() != null)
+            .Select(item => item.GetCard())
+            .Select(item => item.Hero);
+
+        foreach (var hero in heroes)
+        {
+            if(hero != null)
+                hero.ShootAt(shootingPosition);
+        }
     }
+
     public bool TryTakeCard(Card card)
     {
-        ShootingPosition();
+        //ShootingPosition();
         var selectionManager = FindObjectOfType<SelectionManager>();
         var podium = selectionManager.GetPodium();
         if (podium != null && podium.IsEmpty())
         {
             podium.SetCard(card);
+            card.Init();
             TryMergeCards();
             return true;
         } 
@@ -34,6 +55,7 @@ public class PlayerDeck : MonoBehaviour
             if (TryMergeCard(card))
             {
                 TryMergeCards();
+                card.Init();
                 return true;
             }
         }
@@ -67,6 +89,7 @@ public class PlayerDeck : MonoBehaviour
         }
         return true;
     }
+    //нужен отдельный класс для мержа
     private bool TryMergeCard(Card card)
     {
         for (int i = 0; i < _podiums.Count; i++)
@@ -81,6 +104,7 @@ public class PlayerDeck : MonoBehaviour
                 return true;
             }
         }
+
         return false;
     }
     private void TryMergeCards()
@@ -123,6 +147,7 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
+    //в скрипт PodiumModer
     private void Update()
     {
         MovePodiums();
@@ -138,6 +163,7 @@ public class PlayerDeck : MonoBehaviour
             podium.transform.position = Vector3.MoveTowards(pos, position, _speed * Time.deltaTime);
         }
     }
+
     public void PodiumsUp()
     {
         _targetHeight = podiumsPosUp.position.y;
@@ -148,6 +174,7 @@ public class PlayerDeck : MonoBehaviour
         _targetHeight = podiumsPosDown.position.y;
         CollidersEnabled(false);
     }
+    /// 
     private void CollidersEnabled(bool option)
     {
         for (int i = 0; i < _podiums.Count; i++)
@@ -176,4 +203,12 @@ public class PlayerDeck : MonoBehaviour
     //    }
     //    return sumDamage;
     //}
+}
+
+public static class CardMerger
+{
+    public static void MergeCards(List<Podium> podiums)
+    {
+
+    }
 }
