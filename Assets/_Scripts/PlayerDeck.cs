@@ -9,11 +9,18 @@ public class PlayerDeck : MonoBehaviour
     [SerializeField] private List<Podium> _podiums;
     [SerializeField] private Transform podiumsPosUp;
     [SerializeField] private Transform podiumsPosDown;
+    [SerializeField] private Transform shootingPosition;
     private float _targetHeight;
     private float _speed = 0.8f;
-    private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
+    //private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
+    private void ShootingPosition()
+    {
+        var selectionManager = FindObjectOfType<SelectionManager>();
+        selectionManager.ShootingPosition = shootingPosition;
+    }
     public bool TryTakeCard(Card card)
     {
+        ShootingPosition();
         var selectionManager = FindObjectOfType<SelectionManager>();
         var podium = selectionManager.GetPodium();
         if (podium != null && podium.IsEmpty())
@@ -157,16 +164,16 @@ public class PlayerDeck : MonoBehaviour
             podium.Destroy();
         }
     }
-    public int SumDamage()
-    {
-        int sumDamage = 0;
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            if (!_podiums[i].IsEmpty())
-            {
-                sumDamage += DamageAmount[_podiums[i].GetCard().Level - 1];
-            }
-        }
-        return sumDamage;
-    }
+    //public int SumDamage()
+    //{
+    //    int sumDamage = 0;
+    //    for (int i = 0; i < _podiums.Count; i++)
+    //    {
+    //        if (!_podiums[i].IsEmpty())
+    //        {
+    //            sumDamage += DamageAmount[_podiums[i].GetCard().Level - 1];
+    //        }
+    //    }
+    //    return sumDamage;
+    //}
 }

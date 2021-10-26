@@ -18,11 +18,11 @@ public class Card : MonoBehaviour
         set
         {
             _level = value;
-            SetHero();
+            SetHero(null);
             levelLabel.text = Level.ToString();
         }
     }
-    public void SetHero()
+    public void SetHero(Transform position)
     {
         if (spawnedHero != null)
         {
@@ -31,12 +31,13 @@ public class Card : MonoBehaviour
         spawnedHero = Instantiate(_prefabs[_level - 1]);
         spawnedHero.transform.position = heroPosition.position;
         spawnedHero.transform.SetParent(heroPosition);
+        spawnedHero.ShootingPosition = position;
+        spawnedHero.Damage = _level - 1;
         for (int i = 0; i < _materials.Count; i++)
         {
             if (this._renderer.sharedMaterial == _materials[i].Material)
             {
                 spawnedHero.SetMaterial(_materials[i]);
-                return;
             }
         }
     }

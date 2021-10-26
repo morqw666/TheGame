@@ -25,12 +25,18 @@ public class PlayerManager : MonoBehaviour
         HealthPlayer1.text = healthPlayer1.ToString();
         HealthPlayer2.text = healthPlayer2.ToString();
     }
-    public void EndTurn()
+    public void TakeDamage(int damage)
     {
-        healthPlayer1 -= player2.SumDamage();
-        healthPlayer2 -= player1.SumDamage();
-        HealthPlayer1.text = healthPlayer1.ToString();
-        HealthPlayer2.text = healthPlayer2.ToString();
+        if (current == player2)
+        {
+            healthPlayer2 -= damage;
+            HealthPlayer2.text = healthPlayer2.ToString();
+        }
+        else if (current == player1)
+        {
+            healthPlayer1 -= damage;
+            HealthPlayer1.text = healthPlayer1.ToString();
+        }
         if (healthPlayer1 <= 0 || healthPlayer2 <= 0)
         {
             if (healthPlayer1 > healthPlayer2)
@@ -42,6 +48,23 @@ public class PlayerManager : MonoBehaviour
             SceneManager.LoadScene(2);
         }
     }
+    //public void EndTurn()
+    //{
+    //    healthPlayer1 -= player2.SumDamage();
+    //    healthPlayer2 -= player1.SumDamage();
+    //    HealthPlayer1.text = healthPlayer1.ToString();
+    //    HealthPlayer2.text = healthPlayer2.ToString();
+    //    if (healthPlayer1 <= 0 || healthPlayer2 <= 0)
+    //    {
+    //        if (healthPlayer1 > healthPlayer2)
+    //            Lose.winner = "player1";
+    //        else if (healthPlayer2 > healthPlayer1)
+    //            Lose.winner = "player2";
+    //        else
+    //            winner = null;
+    //        SceneManager.LoadScene(2);
+    //    }
+    //}
     public void ChangePlayer()
     {
         if (current == player1)
@@ -57,7 +80,7 @@ public class PlayerManager : MonoBehaviour
         {
             player2.PodiumsDown();
             player1.PodiumsUp();
-            EndTurn();
+            //EndTurn();
             current = player1;
         }
     }

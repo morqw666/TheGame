@@ -4,30 +4,47 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private int _pos;
-    [SerializeField] private int _speed;
-    private PlayerManager playerManager;
-    private void Start()
+    [SerializeField] private int _speed; 
+    private Transform _shootingPosition;
+    private readonly List<int> DamageAmount = new List<int>() { 1, 3, 8, 20 };
+    private int _damage;
+    public int Damage
     {
-        playerManager = FindObjectOfType<PlayerManager>();
+        get => _damage;
+        set
+        {
+            _damage = value;
+        }
+    }
+    public Transform ShootingPosition
+    {
+        get => _shootingPosition;
+        set
+        {
+            _shootingPosition = value;
+        }
+    }
+    void OnTriggerEnter(Collider collider)
+    {
+        Destroy(this.gameObject);
+        var playerManager = FindObjectOfType<PlayerManager>();
+        int damage = DamageAmount[_damage];
+        playerManager.TakeDamage(damage);
     }
     private void FireBullet()
     {
-        if (playerManager.CurrentPlayer())
-        {
-            _pos = 28;
-        }
-        else
-        {
-            _pos = 47;
-        }
         var bullet = this.transform.position;
-        var position = new Vector3(bullet.x, bullet.y, _pos);
-        this.transform.position = Vector3.MoveTowards(bullet, position, _speed * Time.deltaTime);
-        if (bullet.z == position.z)
-        {
-            Destroy(this.gameObject);
-        }
+        this.transform.position = Vector3.MoveTowards(bullet, _shootingPosition.transform.position, _speed * Time.deltaTime);
+        this.transform.rotation = Quaternion.LookRotation(_shootingPosition.transform.position);
+
+        //var bullet = this.transform.position;
+        //Vector3 dir = (_shootingPosition.transform.position - this.transform.position).normalized;
+        //this.transform.position = Vector3.MoveTowards(bullet, bullet + dir*10, _speed * Time.deltaTime);
+
+        //if (bullet == _shootingPosition.transform.position)
+        //{
+        //    Destroy(this.gameObject);
+        //}
     }
     private void Update()
     {

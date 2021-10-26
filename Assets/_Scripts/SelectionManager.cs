@@ -8,6 +8,15 @@ public class SelectionManager : MonoBehaviour
     private Podium _podium;
     private bool isFromDeck;
     private Podium _startPodium;
+    private Transform _shootingPosition;
+    public Transform ShootingPosition
+    {
+        get => _shootingPosition;
+        set
+        {
+            _shootingPosition = value;
+        }
+    }
     public Podium GetPodium()
     {
         return _podium;
@@ -52,7 +61,7 @@ public class SelectionManager : MonoBehaviour
                         if(!lastFromDeck)
                         {
                             deck.TakeCard(_card);
-                            _card.SetHero();
+                            _card.SetHero(_shootingPosition);
                             var hero = FindObjectOfType<Hero>();
                             hero.FireBullet();
                         } 
