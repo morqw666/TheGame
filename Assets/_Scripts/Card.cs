@@ -21,12 +21,10 @@ public class Card : MonoBehaviour
             RegenerateHeroModel();
         }
     }
-
     public void Init()
     {
         RegenerateHeroModel();
     }
-
     private void RegenerateHeroModel()
     {
         if (Hero != null)

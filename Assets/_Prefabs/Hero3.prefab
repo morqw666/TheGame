@@ -50,7 +50,7 @@ MonoBehaviour:
   _renderer: {fileID: -3243074443002450009}
   _prefab: {fileID: 8275956064665060119, guid: 08a5a3a9f05ca534ebc7116f15aac79b, type: 3}
   bulletSpawn: {fileID: 8609994873250468174}
-  _damage: 8
+  _damage: 200
 --- !u!23 &-3243074443002450009
 MeshRenderer:
   m_ObjectHideFlags: 0

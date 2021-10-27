@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private PlayerDeck player1, player2;
-    [SerializeField] private Deck deck;
-    [SerializeField] private PlayerBase playerBase;
+    [SerializeField] private Bot bot;
+    [SerializeField] private Text HealthBase1, HealthBase2;
     private PlayerDeck current;
     public static int GameMode = 1;
     private void Start()
@@ -17,13 +17,6 @@ public class PlayerManager : MonoBehaviour
         current = player1;
         player1.PodiumsUp();
         player2.PodiumsDown();
-    }
-    public void TakeDamage(int damage)
-    {
-        if (current == player2)
-            playerBase.TakeDamageToPlayer2(damage);
-        else if (current == player1)
-            playerBase.TakeDamageToPlayer1(damage);
     }
     public void ChangePlayer()
     {
@@ -35,7 +28,7 @@ public class PlayerManager : MonoBehaviour
             current = player2;
             if (GameMode == 2)
             {
-                deck.InvokeBotTakeCard();
+                bot.InvokeTakeCard();
             }
         } else if (current == player2)
         {
@@ -54,5 +47,18 @@ public class PlayerManager : MonoBehaviour
         if (current == player1)
             return true;
         return false;
+    }
+    public void GameOver()
+    {
+        var health1 = Convert.ToInt32(HealthBase1.text);
+        var health2 = Convert.ToInt32(HealthBase2.text);
+        if (health1 <= 0 || health2 <= 0)
+        {
+            if (health1 > health2)
+                Lose.winner = "player1";
+            else if (health2 > health1)
+                Lose.winner = "player2";
+            SceneManager.LoadScene(2);
+        }
     }
 }

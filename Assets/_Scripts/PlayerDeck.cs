@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerDeck : MonoBehaviour
 {
-    [SerializeField] private List<Podium> _podiums;
+    [SerializeField] public List<Podium> _podiums;
     [SerializeField] private PodiumMover podiumMover;
     //не Transform а (создать класс Castle (тут здоровье базы должно быть))
     [SerializeField] private Transform shootingPosition;
@@ -44,23 +44,6 @@ public class PlayerDeck : MonoBehaviour
                 return true;
             }
         }
-        //for (int i = 0; i < _podiums.Count; i++)
-        //{
-        //    if (_podiums[i].IsEmpty())
-        //    {
-        //        _podiums[i].SetCard(card);
-        //        TryMergeCards();
-        //        return true;
-        //    } 
-        //    else if (IsAllPodiumsFull())
-        //    {
-        //        if (TryMergeCard(card))
-        //        {
-        //            TryMergeCards();
-        //            return true;
-        //        }
-        //    }
-        //}
         return false;
     }
     private bool IsAllPodiumsFull()

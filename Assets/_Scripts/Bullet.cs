@@ -13,10 +13,11 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         Destroy(this.gameObject);
+        var playerBase = collider.GetComponent<PlayerBase>();
+        playerBase.TakeDamage(_damage);
         var playerManager = FindObjectOfType<PlayerManager>();
-        playerManager.TakeDamage(_damage);
+        playerManager.GameOver();
     }
-
     public void SetDamage(int damage)
     {
         _damage = damage;

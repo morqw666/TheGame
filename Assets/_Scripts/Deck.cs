@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Podium> _podiums;
+    [SerializeField] public List<Podium> _podiums;
     [SerializeField] private Card _prefab;
     [SerializeField] private List<ColoredMaterial> _materials;
     [SerializeField] private int _CardDeckCount = 60;
@@ -32,7 +32,7 @@ public class Deck : MonoBehaviour
             }  
         }
     }
-    private void FillEmptyPodiums()
+    public void FillEmptyPodiums()
     {
         if (CardDeck.Count == 0)
         {
@@ -49,16 +49,6 @@ public class Deck : MonoBehaviour
                 _podiums[i].SetCard(card);
             }
         }
-    }
-    public void InvokeBotTakeCard()
-    {
-        Invoke("BotTakeCard", 1.5f);
-    }
-    public void BotTakeCard()
-    {
-        var podium = _podiums[UnityEngine.Random.Range(0, _podiums.Count)];
-        var card = podium.GetCard();
-        TakeCard(card);
     }
     public void ReturnCard(Card card)
     {
