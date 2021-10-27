@@ -67,8 +67,6 @@ public class PlayerManager : MonoBehaviour
             player1.PodiumsUp();
             current = player1;
         }
-
-
     }
     public bool TryTakeCard(Card card)
     {

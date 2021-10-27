@@ -121,6 +121,7 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
+    ///
     public bool SetCardOnPodium(Card card)
     {
         var selectionManager = FindObjectOfType<SelectionManager>();
@@ -135,13 +136,11 @@ public class PlayerDeck : MonoBehaviour
     }
     public void PodiumsUp()
     {
-        podiumMover._podiums = _podiums;
-        podiumMover.MoveUp();
+        podiumMover.MoveUp(_podiums);
     }
     public void PodiumsDown()
     {
-        podiumMover._podiums = _podiums;
-        podiumMover.MoveDown();
+        podiumMover.MoveDown(_podiums);
     }
 
     public void DiscardCard(Podium podium)
@@ -150,13 +149,5 @@ public class PlayerDeck : MonoBehaviour
         {
             podium.Destroy();
         }
-    }
-}
-
-public static class CardMerger
-{
-    public static void MergeCards(List<Podium> podiums)
-    {
-
     }
 }

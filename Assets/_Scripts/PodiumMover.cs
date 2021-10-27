@@ -8,7 +8,7 @@ public class PodiumMover : MonoBehaviour
     [SerializeField] private Transform podiumsPosDown;
     private float _targetHeight;
     private float _speed = 0.8f;
-    public List<Podium> _podiums;
+    private List<Podium> _podiums;
     private void Update()
     {
         MovePodiums();
@@ -23,13 +23,15 @@ public class PodiumMover : MonoBehaviour
             podium.transform.position = Vector3.MoveTowards(pos, position, _speed * Time.deltaTime);
         }
     }
-    public void MoveUp()
+    public void MoveUp(List<Podium> podiums)
     {
+        _podiums = podiums;
         _targetHeight = podiumsPosUp.position.y;
         CollidersEnabled(true);
     }
-    public void MoveDown()
+    public void MoveDown(List<Podium> podiums)
     {
+        _podiums = podiums;
         _targetHeight = podiumsPosDown.position.y;
         CollidersEnabled(false);
     }
