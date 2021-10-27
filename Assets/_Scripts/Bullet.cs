@@ -10,7 +10,6 @@ public class Bullet : MonoBehaviour
     {
         transform.position += transform.forward * _speed * Time.deltaTime;
     }
-
     private void OnTriggerEnter(Collider collider)
     {
         Destroy(this.gameObject);

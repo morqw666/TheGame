@@ -9,7 +9,6 @@ public class Card : MonoBehaviour
     [SerializeField] private Text levelLabel;
     [SerializeField] private Transform heroPosition;
     [SerializeField] private List<Hero> _prefabs;
-    [SerializeField] private List<ColoredMaterial> _materials;
     public Hero Hero;
     [SerializeField] private int _level = 1;
     public int Level
@@ -37,13 +36,6 @@ public class Card : MonoBehaviour
         Hero = Instantiate(_prefabs[_level - 1]);
         Hero.transform.position = heroPosition.position;
         Hero.transform.SetParent(heroPosition);
-        for (int i = 0; i < _materials.Count; i++)
-        {
-            if (this._renderer.sharedMaterial == _materials[i].Material)
-            {
-                Hero.SetMaterial(_materials[i]);
-            }
-        }
     }
     public void SetMaterial(ColoredMaterial material)
     {

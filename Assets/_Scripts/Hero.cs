@@ -10,10 +10,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
 
     [SerializeField] private int _damage;
-    public void SetMaterial(ColoredMaterial material)
-    {
-        _renderer.sharedMaterial = material.Material;
-    }
+
     public void ShootAt(Transform target)
     {
         var direction = target.position - bulletSpawn.position;
