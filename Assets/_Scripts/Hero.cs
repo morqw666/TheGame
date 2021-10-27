@@ -7,7 +7,7 @@ public class Hero : MonoBehaviour
     [SerializeField] private Renderer _renderer;
 
     [SerializeField] private Bullet _prefab;
-    [SerializeField] private Transform spawnBullet;
+    [SerializeField] private Transform bulletSpawn;
 
     [SerializeField] private int _damage;
     public void SetMaterial(ColoredMaterial material)
@@ -16,8 +16,8 @@ public class Hero : MonoBehaviour
     }
     public void ShootAt(Transform target)
     {
-        var direction = target.position - spawnBullet.position;
-        var bullet = Instantiate(_prefab, spawnBullet.position, Quaternion.LookRotation(direction));
+        var direction = target.position - bulletSpawn.position;
+        var bullet = Instantiate(_prefab, bulletSpawn.position, Quaternion.LookRotation(direction));
         bullet.SetDamage(_damage);
     }
 }

@@ -24,7 +24,6 @@ public class PlayerDeck : MonoBehaviour
                 hero.ShootAt(shootingPosition);
         }
     }
-
     public bool TryTakeCard(Card card)
     {
         var selectionManager = FindObjectOfType<SelectionManager>();
@@ -33,14 +32,14 @@ public class PlayerDeck : MonoBehaviour
         {
             podium.SetCard(card);
             card.Init();
-            TryMergeCards();
+            CardMerger.TryMergeCards(_podiums);
             return true;
         } 
         if (IsAllPodiumsFull())
         {
-            if (TryMergeCard(card))
+            if (CardMerger.TryMergeCard(card, _podiums))
             {
-                TryMergeCards();
+                CardMerger.TryMergeCards(_podiums);
                 card.Init();
                 return true;
             }
@@ -75,53 +74,6 @@ public class PlayerDeck : MonoBehaviour
         }
         return true;
     }
-    //нужен отдельный класс для мержа
-    private bool TryMergeCard(Card card)
-    {
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            var podium = _podiums[i];
-            var card1 = podium.GetCard();
-            if (card1.GetMaterial() == card.GetMaterial() && card1.Level == card.Level)
-            {
-                card.Level++;
-                _podiums[i].Destroy();
-                _podiums[i].SetCard(card);
-                return true;
-            }
-        }
-
-        return false;
-    }
-    private void TryMergeCards()
-    {
-        while (CardMerge()){}
-    }
-    private bool CardMerge()
-    {
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            var podium = _podiums[i];
-            if (!podium.IsEmpty())
-            {
-                var card = podium.GetCard();
-                for (int j = 0; j < _podiums.Count; j++)
-                {
-                    if (i != j && !_podiums[j].IsEmpty()) {
-                        var card2 = _podiums[j].GetCard();
-                        if (card2.GetMaterial() == card.GetMaterial() && card2.Level == card.Level)
-                        {
-                            card.Level++;
-                            _podiums[j].Destroy();
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    ///
     public bool SetCardOnPodium(Card card)
     {
         var selectionManager = FindObjectOfType<SelectionManager>();
@@ -129,7 +81,7 @@ public class PlayerDeck : MonoBehaviour
         if (podium != null && podium.IsEmpty())
         {
             podium.SetCard(card);
-            TryMergeCards();
+            CardMerger.TryMergeCards(_podiums);
             return true;
         }
         return false;
@@ -142,7 +94,6 @@ public class PlayerDeck : MonoBehaviour
     {
         podiumMover.MoveDown(_podiums);
     }
-
     public void DiscardCard(Podium podium)
     {
         if (!podium.IsEmpty())

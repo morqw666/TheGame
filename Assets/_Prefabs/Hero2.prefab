@@ -77,9 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39299ba53e450f4580db058c40bbcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnBullet: {fileID: 397616645139557859}
-  _prefab: {fileID: 8275956064665060119, guid: 08a5a3a9f05ca534ebc7116f15aac79b, type: 3}
   _renderer: {fileID: 3262245000224135738}
+  _prefab: {fileID: 8275956064665060119, guid: 08a5a3a9f05ca534ebc7116f15aac79b, type: 3}
+  bulletSpawn: {fileID: 397616645139557859}
   _damage: 6
 --- !u!23 &3262245000224135738
 MeshRenderer:
