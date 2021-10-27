@@ -37,8 +37,6 @@ public class Card : MonoBehaviour
         Hero = Instantiate(_prefabs[_level - 1]);
         Hero.transform.position = heroPosition.position;
         Hero.transform.SetParent(heroPosition);
-        //spawnedHero.ShootingPosition = position;
-        //spawnedHero.Damage = _level - 1;
         for (int i = 0; i < _materials.Count; i++)
         {
             if (this._renderer.sharedMaterial == _materials[i].Material)

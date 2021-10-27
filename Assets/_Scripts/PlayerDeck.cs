@@ -8,22 +8,9 @@ using System.Linq;
 public class PlayerDeck : MonoBehaviour
 {
     [SerializeField] private List<Podium> _podiums;
+    [SerializeField] private PodiumMover podiumMover;
     //не Transform а (создать класс Castle (тут здоровье базы должно быть))
     [SerializeField] private Transform shootingPosition;
-
-    //в другой скрипт PodiumMover (Методы MoveUp и MoveDown)
-    [SerializeField] private Transform podiumsPosUp;
-    [SerializeField] private Transform podiumsPosDown;
-    private float _targetHeight;
-    private float _speed = 0.8f;
-    /// ////////////////
-    //private readonly List<int> DamageAmount = new List<int>(){1,3,8,20};
-    //private void ShootingPosition()
-    //{
-    //    var selectionManager = FindObjectOfType<SelectionManager>();
-    //    selectionManager.ShootingPosition = shootingPosition;
-    //}
-
     public void FireBullets()
     {
         var heroes = _podiums
@@ -40,7 +27,6 @@ public class PlayerDeck : MonoBehaviour
 
     public bool TryTakeCard(Card card)
     {
-        //ShootingPosition();
         var selectionManager = FindObjectOfType<SelectionManager>();
         var podium = selectionManager.GetPodium();
         if (podium != null && podium.IsEmpty())
@@ -147,43 +133,17 @@ public class PlayerDeck : MonoBehaviour
         }
         return false;
     }
-    //в скрипт PodiumModer
-    private void Update()
-    {
-        MovePodiums();
-    }
-
-    private void MovePodiums()
-    {
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            var podium = _podiums[i];
-            var pos = podium.transform.position;
-            var position = new Vector3(pos.x, _targetHeight, pos.z);
-            podium.transform.position = Vector3.MoveTowards(pos, position, _speed * Time.deltaTime);
-        }
-    }
-
     public void PodiumsUp()
     {
-        _targetHeight = podiumsPosUp.position.y;
-        CollidersEnabled(true);
+        podiumMover._podiums = _podiums;
+        podiumMover.MoveUp();
     }
     public void PodiumsDown()
     {
-        _targetHeight = podiumsPosDown.position.y;
-        CollidersEnabled(false);
+        podiumMover._podiums = _podiums;
+        podiumMover.MoveDown();
     }
-    /// 
-    private void CollidersEnabled(bool option)
-    {
-        for (int i = 0; i < _podiums.Count; i++)
-        {
-            var podium = _podiums[i];
-            var colider = podium.GetComponent<Collider>();
-            colider.enabled = option;
-        }
-    }
+
     public void DiscardCard(Podium podium)
     {
         if (!podium.IsEmpty())
@@ -191,18 +151,6 @@ public class PlayerDeck : MonoBehaviour
             podium.Destroy();
         }
     }
-    //public int SumDamage()
-    //{
-    //    int sumDamage = 0;
-    //    for (int i = 0; i < _podiums.Count; i++)
-    //    {
-    //        if (!_podiums[i].IsEmpty())
-    //        {
-    //            sumDamage += DamageAmount[_podiums[i].GetCard().Level - 1];
-    //        }
-    //    }
-    //    return sumDamage;
-    //}
 }
 
 public static class CardMerger
